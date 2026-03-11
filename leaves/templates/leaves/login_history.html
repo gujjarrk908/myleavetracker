@@ -1,0 +1,58 @@
+{% extends 'leaves/base.html' %}
+
+{% block title %}Login History - Leave Tracker{% endblock %}
+
+{% block content %}
+<header>
+    <h1>Office Login History</h1>
+    <div style="display: flex; gap: 12px; align-items: center;">
+        <a href="{% url 'log_login' %}" class="btn btn-primary">+ Log Login</a>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Dashboard</a>
+    </div>
+</header>
+
+<div class="card" style="margin-bottom: 32px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="{% url 'login_history_filtered' prev_year prev_month %}" class="btn btn-secondary">&larr; Previous</a>
+        <h2 style="margin: 0; font-size: 1.5rem; color: #a5b4fc;">{{ current_month|date:"F Y" }}</h2>
+        <a href="{% url 'login_history_filtered' next_year next_month %}" class="btn btn-secondary">Next &rarr;</a>
+    </div>
+</div>
+
+<div class="card" style="padding: 0; overflow: hidden;">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Login Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for login in logins %}
+            <tr>
+                <td style="font-weight: 500;">{{ login.date|date:"D, d M Y" }}</td>
+                <td>{{ login.login_time|time:"H:i" }}</td>
+                <td>
+                    {% if login.is_late %}
+                        <span class="badge" style="background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);">LATE</span>
+                    {% else %}
+                        <span class="badge" style="background: #10b981;">ON TIME</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'log_login' %}?date={{ login.date|date:'Y-m-d' }}" style="color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600;">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    No login records found for this month.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

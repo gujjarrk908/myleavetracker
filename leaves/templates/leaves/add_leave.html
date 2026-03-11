@@ -6,7 +6,7 @@
     <a href="{% url 'dashboard' %}" style="color: var(--primary); text-decoration: none;">&larr; Back to Dashboard</a>
 </header>
 
-<div class="card" style="max-width: 500px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+<div class="card form-container">
     <form method="POST">
         {% csrf_token %}
         <div class="form-group">
@@ -29,6 +29,9 @@
             <textarea id="remarks" name="remarks" rows="3" placeholder="Optional notes..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%">Save Leave</button>
+        <div style="margin-top: 15px;">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="width:100%">Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock %}

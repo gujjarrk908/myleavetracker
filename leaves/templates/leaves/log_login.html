@@ -1,0 +1,39 @@
+{% extends 'leaves/base.html' %}
+
+{% block title %}Log Office Login - Leave Tracker{% endblock %}
+
+{% block content %}
+<div class="card form-container">
+    <h1 class="text-center mb-6 font-bold"
+        style="font-size: 1.75rem; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+        Log Office Login
+    </h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-6">
+            <label for="date" class="mb-4" style="color: var(--text-muted); display: block;">Date</label>
+            <input type="date" name="date" id="date" required
+                value="{{ target_date|date:'Y-m-d' }}"
+                onclick="this.showPicker()">
+        </div>
+        
+        <div class="form-group mb-6">
+            <label for="login_time" class="mb-4" style="color: var(--text-muted); display: block;">Login Time (HH:MM)</label>
+            <input type="time" name="login_time" id="login_time" required
+                value="{% if login_entry %}{{ login_entry.login_time|time:'H:i' }}{% endif %}"
+                onclick="this.showPicker()">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full">
+            {% if login_entry %}Update Login Time{% else %}Record Login Time{% endif %}
+        </button>
+
+        <div class="mt-4">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary w-full">
+                Back to Dashboard
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

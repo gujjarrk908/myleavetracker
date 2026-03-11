@@ -17,6 +17,13 @@
             --border: #334155;
             --success: #10b981;
             --error: #ef4444;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -47,30 +54,52 @@
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: var(--transition);
             cursor: pointer;
             border: none;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .btn.w-full {
+            display: block;
+            width: 100%;
         }
 
         .btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            color: white;
+            transform: translateY(-2px);
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             padding: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             margin-bottom: 24px;
         }
 
@@ -156,7 +185,6 @@
             font-family: inherit;
             background-color: #0f172a;
             color: var(--text-main);
-            box-sizing: border-box;
             font-size: 16px;
         }
 
@@ -165,7 +193,8 @@
             min-height: 100px;
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator {
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
         }
@@ -173,9 +202,32 @@
         input:focus,
         select:focus,
         textarea:focus {
-            outline: 2px solid var(--primary);
+            outline: 2px solid #6366f1;
             border-color: transparent;
         }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Utilities */
+        .p-6 { padding: 24px; }
+        .p-8 { padding: 32px; }
+        .m-0 { margin: 0; }
+        .mt-4 { margin-top: 16px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .rounded-xl { border-radius: var(--radius-lg); }
+        .w-full { width: 100%; }
+        .bg-clip-text {
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 700; }
 
         .badge {
             font-size: 12px;

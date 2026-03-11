@@ -3,7 +3,11 @@
 {% block content %}
 <header>
     <h1>Leave Tracker</h1>
-    <a href="{% url 'add_leave' %}" class="btn btn-primary">Add Leave</a>
+    <div style="display: flex; gap: 10px;">
+        <a href="{% url 'login_history' %}" class="btn btn-secondary">History</a>
+        <a href="{% url 'log_login' %}" class="btn btn-secondary">Log Login</a>
+        <a href="{% url 'add_leave' %}" class="btn btn-primary">Add Leave</a>
+    </div>
 </header>
 
 <div class="summary-grid">
@@ -24,6 +28,46 @@
         <div class="summary-value">{{ summary.balance }}</div>
     </div>
 </div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 10px;">
+    <h2 style="margin: 0; font-size: 18px; color: var(--text-muted);">Office Login Tracker (This Month)</h2>
+    <a href="{% url 'login_history' %}" style="color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600;">Full History &rarr;</a>
+</div>
+<div class="summary-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 10px;">
+    <div class="summary-item">
+        <div class="summary-label">Late Logins (> 10:30)</div>
+        <div class="summary-value" style="color: {% if summary.is_danger %}var(--error){% else %}var(--primary){% endif %};">
+            {{ summary.late_count }}
+        </div>
+    </div>
+    <div class="summary-item">
+        <div class="summary-label">Logins Remaining</div>
+        <div class="summary-value">{{ summary.logins_remaining }}</div>
+    </div>
+    <div class="summary-item {% if summary.is_danger %}danger-glow{% endif %}" 
+         style="background: {% if summary.is_danger %}rgba(239, 68, 68, 0.1){% else %}var(--card-bg){% endif %}; 
+                border-color: {% if summary.is_danger %}var(--error){% else %}var(--border){% endif %};">
+        <div class="summary-label" style="color: {% if summary.is_danger %}var(--error){% else %}var(--text-muted){% endif %};">Status</div>
+        <div class="summary-value" style="color: {% if summary.is_danger %}var(--error){% else %}var(--success){% endif %}; font-size: 20px;">
+            {% if summary.is_danger %}
+                ⚠️ LIMIT CROSSED
+            {% else %}
+                ✅ WITHIN LIMIT
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .danger-glow {
+        animation: pulse-red 2s infinite;
+    }
+    @keyframes pulse-red {
+        0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+</style>
 
 <div class="card">
     <h2 style="margin-top:0">Leave History</h2>
