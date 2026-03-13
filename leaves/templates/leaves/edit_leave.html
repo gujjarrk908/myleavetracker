@@ -22,8 +22,8 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select id="status" name="status">
-                <option value="TAKEN" {% if leave.status=='TAKEN' %}selected{% endif %}>Taken</option>
-                <option value="PLANNED" {% if leave.status=='PLANNED' %}selected{% endif %}>Planned/Advance</option>
+                <option value="TAKEN" {% if leave.status == 'TAKEN' %}selected{% endif %}>Taken</option>
+                <option value="PLANNED" {% if leave.status == 'PLANNED' %}selected{% endif %}>Planned/Advance</option>
             </select>
         </div>
         <div class="form-group">
@@ -32,7 +32,7 @@
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%">Update Leave</button>
         <div style="margin-top: 15px;">
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="width:100%">Cancel</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="width:100%">Go Back</a>
         </div>
     </form>
 </div>
